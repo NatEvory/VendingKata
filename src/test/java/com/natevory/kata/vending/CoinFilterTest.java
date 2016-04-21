@@ -20,7 +20,11 @@ public class CoinFilterTest {
 		assertEquals("A quarter should be recognized as a quarter",CoinType.QUARTER,coinFilter.getCoinType(quarter));
 	}
 	
-	
+	@Test
+	public void coinFilterShouldRecognizeDimes(){
+		Coin dime = new Coin(CoinType.DIME.weight(),CoinType.DIME.size());
+		assertEquals("A quarter should be recognized as a quarter",CoinType.DIME,coinFilter.getCoinType(dime));
+	}
 	
 	
 }
