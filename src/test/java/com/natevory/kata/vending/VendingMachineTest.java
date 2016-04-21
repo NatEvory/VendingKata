@@ -9,7 +9,7 @@ public class VendingMachineTest {
 	private VendingMachine vendingMachine;
 	
 	@Before
-	public void TestSetup(){
+	public void testSetup(){
 		vendingMachine=new VendingMachine();
 	}
 	
