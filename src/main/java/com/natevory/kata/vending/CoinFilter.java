@@ -8,8 +8,10 @@ public class CoinFilter {
 		final double coinWeight=coin.getWeight();
 		if(coinSize==QUARTER.size() && coinWeight==QUARTER.weight())
 			return QUARTER;
-		if(coinSize==DIME.size() && coinWeight==DIME.weight())
+		else if(coinSize==DIME.size() && coinWeight==DIME.weight())
 			return DIME;
+		else if(coinSize==NICKEL.size() && coinWeight==NICKEL.weight())
+			return NICKEL;
 		else
 			return null;
 	}
