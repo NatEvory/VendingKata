@@ -26,7 +26,7 @@ public enum CoinType {
 	public int valueInCents(){return valueInCents;}
 	
 	public static Coin createCoin(CoinType type){
-		if(type == UNKNOWN)
+		if(type == UNKNOWN || type == null)
 			return null;
 		return new Coin(type.weight(),type.size());
 	}
