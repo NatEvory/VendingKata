@@ -1,7 +1,9 @@
 package com.natevory.kata.vending;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import javax.swing.event.EventListenerList;
 
@@ -13,6 +15,7 @@ public class VendingMachine {
 	private List<Coin> coins = new ArrayList<Coin>();
 	private List<Coin> returnedCoins = new ArrayList<Coin>();
 	private List<Item> dispensedItems = new ArrayList<Item>();
+	private Queue<String> messageQueue = new LinkedList<String>();
 	private static final Logger log = LoggerFactory.getLogger(VendingMachine.class);
 	
 	
@@ -36,10 +39,13 @@ public class VendingMachine {
 	
 	public String getDisplayMessage(){
 		log.debug("Displaying a message");
-		if(coins.size()>0)
+		if(messageQueue.size() > 0){
+			return messageQueue.poll();
+		} else if (coins.size()>0){
 			return "COINS";
-		else
+		} else {
 			return "INSERT COIN";
+		}
 	}
 	
 	public int getCoinCount(){
@@ -52,6 +58,7 @@ public class VendingMachine {
 			throw new IllegalArgumentException("Cannot request null ItemType");
 		}
 		dispensedItems.add(new Item(itemType));
+		messageQueue.add("Thank You");
 	}
 	
 	public Item[] retrieveDispensedItems(){

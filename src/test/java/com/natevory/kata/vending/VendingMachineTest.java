@@ -50,4 +50,12 @@ public class VendingMachineTest {
 		assertEquals("VendingMachine should dispense chips",ItemType.CHIPS,dispensedItems[0].getItemType());
 	}
 	
+	@Test
+	public void theVendingMachineShouldDisplayThankYouAfterPurchasingAnItem(){
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.requestItem(ItemType.CHIPS);
+		assertEquals("VendingMachine should say Thank You","Thank You",vendingMachine.getDisplayMessage());
+	}
+	
 }
