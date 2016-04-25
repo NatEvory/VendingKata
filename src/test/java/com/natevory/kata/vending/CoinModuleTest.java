@@ -33,7 +33,21 @@ public class CoinModuleTest {
 		Coin coin = new Coin(1,1);
 		assertFalse("CoinModule rejects unknown coins",coinModule.insertCoin(coin));
 		assertEquals("CoinModule has 0 coins inserted after rejecting a coin",0,coinModule.getInsertedCoinCount());
+	}
+	
+	@Test
+	public void theCoinModuleShouldCalculateTheValueofInsertedCoins(){
+		Coin nickel = CoinType.createCoin(CoinType.NICKEL);
+		coinModule.insertCoin(nickel);
+		assertEquals("CoinModule should return 5 for value after inserting a nickel",5,coinModule.getValueOfInsertedCoins());
 		
+		Coin dime = CoinType.createCoin(CoinType.DIME);
+		coinModule.insertCoin(dime);
+		assertEquals("CoinModule should return 15 for value after inserting a nickel & dime",15,coinModule.getValueOfInsertedCoins());
+		
+		Coin quarter = CoinType.createCoin(CoinType.QUARTER);
+		coinModule.insertCoin(quarter);
+		assertEquals("CoinModule should return 40 for value after inserting a nickel,dime & quarter",40,coinModule.getValueOfInsertedCoins());
 	}
 	
 }

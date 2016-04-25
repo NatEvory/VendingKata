@@ -27,6 +27,14 @@ public class CoinModule {
 		return true;
 	}
 	
+	public int getValueOfInsertedCoins(){
+		return insertedCoins.stream()
+				.map(c -> CoinType.getCoinType(c))
+				.filter(ct -> ct != CoinType.UNKNOWN)
+				.mapToInt(CoinType::valueInCents)
+				.sum();
+	}
+	
 	public int getInsertedCoinCount(){
 		return insertedCoins.size();
 	}
