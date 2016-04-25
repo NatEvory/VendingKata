@@ -12,6 +12,7 @@ public class VendingMachine {
 	
 	private List<Coin> coins = new ArrayList<Coin>();
 	private List<Coin> returnedCoins = new ArrayList<Coin>();
+	private List<Item> dispensedItems = new ArrayList<Item>();
 	private static final Logger log = LoggerFactory.getLogger(VendingMachine.class);
 	
 	
@@ -43,5 +44,19 @@ public class VendingMachine {
 	
 	public int getCoinCount(){
 		return coins.size();
+	}
+	
+	public void requestItem(ItemType itemType){
+		if(itemType == null){
+			log.error("Cannot request null ItemType");
+			throw new IllegalArgumentException("Cannot request null ItemType");
+		}
+		dispensedItems.add(new Item(itemType));
+	}
+	
+	public Item[] retrieveDispensedItems(){
+		Item[] items = dispensedItems.toArray(new Item[0]);
+		dispensedItems.clear();
+		return items;
 	}
 }

@@ -2,6 +2,8 @@ package com.natevory.kata.vending;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 
 public class VendingMachineTest {
@@ -36,6 +38,16 @@ public class VendingMachineTest {
 		assertEquals("An empty vending machine should display \"INSERT COIN\"","INSERT COIN",vendingMachine.getDisplayMessage());
 		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		assertNotEquals("A vending machine with a coin in it should NOT display \"INSERT COIN\"","INSERT COIN", vendingMachine.getDisplayMessage());
+	}
+	
+	@Test
+	public void theVendingMachineShouldDispenseChipsWhen50CentsHaveBeenInsterted(){
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.requestItem(ItemType.CHIPS);
+		Item[] dispensedItems =  vendingMachine.retrieveDispensedItems();
+		assertEquals("VendingMachine should dispense 1 item",1,dispensedItems.length);
+		assertEquals("VendingMachine should dispense chips",ItemType.CHIPS,dispensedItems[0].getItemType());
 	}
 	
 }
