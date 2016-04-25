@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 
 public class VendingMachine {
 	
-	
-	private CoinFilter coinFilter = new CoinFilter();
 	private List<Coin> coins = new ArrayList<Coin>();
 	private List<Coin> returnedCoins = new ArrayList<Coin>();
 	private static final Logger log = LoggerFactory.getLogger(VendingMachine.class);
