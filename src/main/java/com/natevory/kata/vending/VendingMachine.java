@@ -5,12 +5,17 @@ import java.util.List;
 
 import javax.swing.event.EventListenerList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class VendingMachine {
 	
 	
 	private CoinFilter coinFilter = new CoinFilter();
 	private List<Coin> coins = new ArrayList<Coin>();
 	private List<Coin> returnedCoins = new ArrayList<Coin>();
+	private static final Logger log = LoggerFactory.getLogger(VendingMachine.class);
+	
 	
 	public void insertCoin(Coin coin){
 		CoinType type = coinFilter.getCoinType(coin);
@@ -31,6 +36,7 @@ public class VendingMachine {
 	}
 	
 	public String getDisplayMessage(){
+		log.debug("Displaying a message");
 		if(coins.size()>0)
 			return "COINS";
 		else
