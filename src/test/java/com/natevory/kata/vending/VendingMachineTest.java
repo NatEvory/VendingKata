@@ -12,7 +12,7 @@ public class VendingMachineTest {
 	
 	@Before
 	public void testSetup(){
-		vendingMachine=new VendingMachine();
+		vendingMachine=new VendingMachine(new CoinModule());
 	}
 	
 	@Test
