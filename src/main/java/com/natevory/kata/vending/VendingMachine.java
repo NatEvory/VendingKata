@@ -18,7 +18,7 @@ public class VendingMachine {
 	
 	
 	public void insertCoin(Coin coin){
-		CoinType type = coinFilter.getCoinType(coin);
+		CoinType type = CoinType.getCoinType(coin);
 		if(type == CoinType.UNKNOWN)
 			rejectCoin(coin);
 		else
