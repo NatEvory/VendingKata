@@ -14,6 +14,13 @@ public class ItemModule {
 	private Map<ItemType, Integer> itemStock = new HashMap<ItemType,Integer>();
 	
 	
+	public Item dispenseItem(ItemType itemType){
+		if(getStock(itemType)== 0)
+			return null;
+		itemStock.put(itemType, getStock(itemType)-1);
+		return new Item(itemType);
+	}
+	
 	public void stockItem(ItemType itemType,int amount){
 		itemStock.put(itemType, getStock(itemType)+amount);
 	}

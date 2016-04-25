@@ -26,7 +26,12 @@ public class ItemModuleTest {
 	
 	@Test
 	public void theItemModuleShouldDispenseTheRequestedItemIfItIsInStock(){
-		//itemModule.dispenseItem(ItemType.CANDY);
+		Item item = itemModule.dispenseItem(ItemType.CANDY);
+		assertNull("ItemModule should not dispense anything when out of stock",null);
+		itemModule.stockItem(ItemType.CANDY, 1);
+		Item candy = itemModule.dispenseItem(ItemType.CANDY); 
+		assertEquals("ItemModule should dispense candy when I request Candy",ItemType.CANDY,candy.getItemType());
+		assertEquals("ItemModule should not have any candy left in stock after stocking and then dispensing 1",0,itemModule.getStock(ItemType.CANDY));
 	}
 	
 }
