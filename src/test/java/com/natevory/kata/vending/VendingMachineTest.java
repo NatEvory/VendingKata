@@ -53,7 +53,7 @@ public class VendingMachineTest {
 	}
 	
 	@Test
-	public void theVendingMachineShouldDispenseChipsWhen50CentsHaveBeenInsterted(){
+	public void theVendingMachineShouldDispenseChipsWhen50CentsHaveBeenInserted(){
 		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		vendingMachine.requestItem(ItemType.CHIPS);
