@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class CoinModule {
 	private static final Logger log = LoggerFactory.getLogger(CoinModule.class);
 	private List<Coin> insertedCoins = new ArrayList<Coin>();
-	private Map<CoinType, List<Coin>> coinStock = new HashMap<>();
+	private Map<CoinType, Integer> coinStock = new HashMap<>();
 	
 	
 	public boolean insertCoin(Coin coin){
@@ -27,6 +27,7 @@ public class CoinModule {
 		return true;
 	}
 	
+	
 	public int getValueOfInsertedCoins(){
 		return insertedCoins.stream()
 				.map(c -> CoinType.getCoinType(c))
@@ -37,6 +38,31 @@ public class CoinModule {
 	
 	public int getInsertedCoinCount(){
 		return insertedCoins.size();
+	}
+	
+	public void stockCoins(CoinType coinType,int amount){
+		validateCoinType(coinType);
+		coinStock.put(coinType,getStock(coinType)+amount);
+	}
+	
+	public int getStock(CoinType coinType){
+		validateCoinType(coinType);
+		Integer stock = coinStock.get(coinType);
+		if(stock == null)
+			stock = new Integer(0);
+		return stock;
+		
+	}
+
+	private void validateCoinType(CoinType coinType){
+		if(coinType == null){
+			log.error("CoinModule cannot stock null CoinType");
+			throw new IllegalArgumentException("CoinModule cannot stock null CoinType");
+		}
+		if(coinType == CoinType.UNKNOWN){
+			log.error("CoinModule cannot stock unknown CoinType");
+			throw new IllegalArgumentException("CoinModule cannot stock unknown CoinType");
+		}
 	}
 	
 }

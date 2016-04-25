@@ -50,4 +50,13 @@ public class CoinModuleTest {
 		assertEquals("CoinModule should return 40 for value after inserting a nickel,dime & quarter",40,coinModule.getValueOfInsertedCoins());
 	}
 	
+	@Test
+	public void theCoinModuleShouldStockCoins(){
+		coinModule.stockCoins(CoinType.NICKEL,3);
+		assertEquals("CoinModule should have 3 nickels after socking 3",3,coinModule.getStock(CoinType.NICKEL));
+		coinModule.stockCoins(CoinType.QUARTER,2);
+		assertEquals("CoinModule should have 2 quarters after socking 2",2,coinModule.getStock(CoinType.QUARTER));
+		coinModule.stockCoins(CoinType.DIME,1);
+		assertEquals("CoinModule should have 1 dime after socking 1",1,coinModule.getStock(CoinType.DIME));
+	}
 }
