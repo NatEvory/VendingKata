@@ -12,7 +12,7 @@ public class VendingMachineTest {
 	
 	@Before
 	public void testSetup(){
-		vendingMachine=new VendingMachine(new CoinModule());
+		vendingMachine=new VendingMachine(new CoinModule(),new ItemModule());
 	}
 	
 	@Test
@@ -54,6 +54,7 @@ public class VendingMachineTest {
 	
 	@Test
 	public void theVendingMachineShouldDispenseChipsWhen50CentsHaveBeenInserted(){
+		vendingMachine.stockItem(ItemType.CHIPS,1);
 		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		vendingMachine.requestItem(ItemType.CHIPS);
@@ -64,6 +65,7 @@ public class VendingMachineTest {
 	
 	@Test
 	public void theVendingMachineShouldDisplayThankYouAfterPurchasingAnItem(){
+		vendingMachine.stockItem(ItemType.CHIPS, 1);
 		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		vendingMachine.requestItem(ItemType.CHIPS);

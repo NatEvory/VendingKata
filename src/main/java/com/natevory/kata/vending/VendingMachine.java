@@ -11,13 +11,15 @@ import org.slf4j.LoggerFactory;
 public class VendingMachine {
 	
 	private CoinModule coinModule;
+	private ItemModule itemModule;
 	private List<Coin> returnedCoins = new ArrayList<Coin>();
 	private List<Item> dispensedItems = new ArrayList<Item>();
 	private Queue<String> messageQueue = new LinkedList<String>();
 	private static final Logger log = LoggerFactory.getLogger(VendingMachine.class);
 	
-	public VendingMachine(CoinModule coinModule){
+	public VendingMachine(CoinModule coinModule,ItemModule itemModule){
 		setCoinModule(coinModule);
+		setItemModule(itemModule);
 	}
 	
 	private void setCoinModule(CoinModule coinModule){
@@ -26,6 +28,13 @@ public class VendingMachine {
 			throw new IllegalArgumentException("VendingMachine cannot have a null CoinModule");
 		}
 		this.coinModule = coinModule;
+	}
+	private void setItemModule(ItemModule itemModule){
+		if(itemModule == null){
+			log.error("VendingMachine cannot have a null ItemModule");
+			throw new IllegalArgumentException("VendingMachine cannot have a null ItemModule");
+		}
+		this.itemModule = itemModule;
 	}
 	
 	public void insertCoin(Coin coin){
@@ -64,13 +73,22 @@ public class VendingMachine {
 			log.error("Cannot request null ItemType");
 			throw new IllegalArgumentException("Cannot request null ItemType");
 		}
-		dispensedItems.add(new Item(itemType));
-		messageQueue.add("Thank You");
+		Item item = itemModule.dispenseItem(itemType);
+		if(item == null){
+			messageQueue.add("Out of Stock");
+		} else {
+			dispensedItems.add(item);
+			messageQueue.add("Thank You");
+		}
 	}
 	
 	public Item[] retrieveDispensedItems(){
 		Item[] items = dispensedItems.toArray(new Item[0]);
 		dispensedItems.clear();
 		return items;
+	}
+	
+	public void stockItem(ItemType itemType, int amount){
+		itemModule.stockItem(itemType, amount);
 	}
 }
