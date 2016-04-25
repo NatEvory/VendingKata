@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 public class CoinModuleTest {
 	
 	private CoinModule coinModule;
@@ -67,7 +69,7 @@ public class CoinModuleTest {
 		
 		coinModule.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		try{
-			Coin[] change = coinModule.makeChange(10);
+			List<Coin> change = coinModule.makeChange(10);
 			int value = 0;
 			for(Coin c : change)
 				value += CoinType.getCoinType(c).valueInCents();

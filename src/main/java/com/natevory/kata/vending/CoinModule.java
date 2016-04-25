@@ -66,7 +66,7 @@ public class CoinModule {
 	}
 
 
-	public Coin[] makeChange(int value) throws InsufficientFundsException, InsufficientChangeException{
+	public List<Coin> makeChange(int value) throws InsufficientFundsException, InsufficientChangeException{
 		int insertedCoinValue = getValueOfInsertedCoins();
 		int difference = insertedCoinValue - value;
 		if(difference < 0)
@@ -95,7 +95,7 @@ public class CoinModule {
 			}
 			throw new InsufficientChangeException();
 		}
-		return returnCoins.toArray(new Coin[0]);
+		return returnCoins;
 	}
 	
 	private Coin dispenseCoinFromStock(CoinType coinType){

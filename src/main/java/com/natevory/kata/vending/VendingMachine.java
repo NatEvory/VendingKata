@@ -42,6 +42,10 @@ public class VendingMachine {
 			rejectCoin(coin);
 	}
 	
+	public void stockCoins(CoinType coinType,int amount){
+		coinModule.stockCoins(coinType, amount);
+	}
+	
 	public Coin[] retrieveReturnedCoins(){
 		Coin[] coinReturn = returnedCoins.toArray(new Coin[0]);
 		returnedCoins.clear();
@@ -73,13 +77,23 @@ public class VendingMachine {
 			log.error("Cannot request null ItemType");
 			throw new IllegalArgumentException("Cannot request null ItemType");
 		}
-		Item item = itemModule.dispenseItem(itemType);
-		if(item == null){
-			messageQueue.add("Out of Stock");
-		} else {
+		int price = itemModule.getPrice(itemType);
+		if(itemModule.getStock(itemType)<1){
+			messageQueue.add("Sold Out");
+			return;
+		}
+		try{
+			List<Coin> change = coinModule.makeChange(price);
+			Item item = itemModule.dispenseItem(itemType);
+			returnedCoins.addAll(change);
 			dispensedItems.add(item);
 			messageQueue.add("Thank You");
+		} catch(InsufficientFundsException ife){
+			messageQueue.add("Price:"+price);
+		} catch (InsufficientChangeException ice) {
+			messageQueue.add("No Change");
 		}
+		
 	}
 	
 	public Item[] retrieveDispensedItems(){

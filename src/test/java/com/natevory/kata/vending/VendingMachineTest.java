@@ -72,4 +72,44 @@ public class VendingMachineTest {
 		assertEquals("VendingMachine should say Thank You","Thank You",vendingMachine.getDisplayMessage());
 	}
 	
+	@Test
+	public void theVendingMachineShouldStockCoins(){
+		vendingMachine.stockCoins(CoinType.QUARTER,3);
+		vendingMachine.stockCoins(CoinType.DIME,2);
+		vendingMachine.stockCoins(CoinType.NICKEL,5);
+	}
+	
+	@Test
+	public void theVendingMachineShouldDisplaySoldOutWhenItIsOutStock(){
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.requestItem(ItemType.CHIPS);
+		assertEquals("VendingMachine should display 'Sold Out'","Sold Out",vendingMachine.getDisplayMessage());
+	}
+	
+	@Test
+	public void theVendingMachineShouldDispenseRequestedItemAndChange(){
+		vendingMachine.stockCoins(CoinType.QUARTER,3);
+		vendingMachine.stockCoins(CoinType.DIME,2);
+		vendingMachine.stockCoins(CoinType.NICKEL,5);
+		
+		vendingMachine.stockItem(ItemType.CANDY, 1);
+
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		
+		vendingMachine.requestItem(ItemType.CANDY);
+		Item[] dispensedItems = vendingMachine.retrieveDispensedItems();
+		assertEquals("VendingMachine should dispense 1 item",1,dispensedItems.length);
+		assertEquals("VendingMachine should dispense chips",ItemType.CANDY,dispensedItems[0].getItemType());
+		Coin[] returnedCoins = vendingMachine.retrieveReturnedCoins();
+		int value = 0;
+		for(Coin c:returnedCoins){
+			value +=CoinType.getCoinType(c).valueInCents();
+		}
+		assertEquals("VendingMachine should return 10 cents change",10,value);
+	}
+	
 }

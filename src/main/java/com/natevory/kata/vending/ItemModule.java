@@ -32,4 +32,14 @@ public class ItemModule {
 		return currentStock;
 	}
 	
+	public int getPrice(ItemType itemType){
+		if(itemType == ItemType.CANDY)
+			return 65;
+		if(itemType == ItemType.CHIPS)
+			return 50;
+		if(itemType == ItemType.SODA)
+			return 100;
+		throw new IllegalArgumentException("Cannot get price of unkown item type");
+	}
+	
 }
