@@ -16,8 +16,16 @@ public class CoinModuleTest {
 	@Test
 	public void theCoinModuleShouldAcceptCoins(){
 		Coin coin = CoinType.createCoin(CoinType.QUARTER);
-		assertTrue(coinModule.insertCoin(coin));
-		assertEquals("CoinModule has 1 coin in stock after inserting a coin",1,coinModule.getInsertedCoinCount());
+		assertTrue("CoinModule accepts quarters",coinModule.insertCoin(coin));
+		assertEquals("CoinModule has 1 coin inserted after inserting a coin",1,coinModule.getInsertedCoinCount());
+	}
+	
+	@Test
+	public void theCoinModuleShouldRejectUnknownCoins(){
+		Coin coin = new Coin(1,1);
+		assertFalse("CoinModule rejects unknown coins",coinModule.insertCoin(coin));
+		assertEquals("CoinModule has 0 coins inserted after rejecting a coin",0,coinModule.getInsertedCoinCount());
+		
 	}
 	
 }
