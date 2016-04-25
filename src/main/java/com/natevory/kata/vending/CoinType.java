@@ -1,10 +1,5 @@
 package com.natevory.kata.vending;
 
-import static com.natevory.kata.vending.CoinType.DIME;
-import static com.natevory.kata.vending.CoinType.NICKEL;
-import static com.natevory.kata.vending.CoinType.QUARTER;
-import static com.natevory.kata.vending.CoinType.UNKNOWN;
-
 public enum CoinType {
 	NICKEL(	5.0,	21.21,	5),
 	DIME(	2.27,	17.9,	10),
