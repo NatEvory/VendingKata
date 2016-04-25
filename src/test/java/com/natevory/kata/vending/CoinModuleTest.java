@@ -85,4 +85,10 @@ public class CoinModuleTest {
 		coinModule.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		coinModule.makeChange(30);
 	}
+	
+	@Test(expected=InsufficientChangeException.class)
+	public void theCoinModuleSHouldThrowInsufficientChangeException() throws InsufficientFundsException, InsufficientChangeException{
+		coinModule.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		coinModule.makeChange(10);
+	}
 }
