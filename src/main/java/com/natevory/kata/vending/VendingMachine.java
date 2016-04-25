@@ -89,7 +89,7 @@ public class VendingMachine {
 			dispensedItems.add(item);
 			messageQueue.add("Thank You");
 		} catch(InsufficientFundsException ife){
-			messageQueue.add("Price:"+price);
+			messageQueue.add(String.format("Price: %.2f",price/100f));
 		} catch (InsufficientChangeException ice) {
 			messageQueue.add("No Change");
 		}

@@ -112,4 +112,21 @@ public class VendingMachineTest {
 		assertEquals("VendingMachine should return 10 cents change",10,value);
 	}
 	
+	@Test
+	public void theVendingMachineShouldDisplayPriceWhenThereAreInsufficientFunds(){
+		vendingMachine.stockCoins(CoinType.QUARTER,3);
+		vendingMachine.stockCoins(CoinType.DIME,2);
+		vendingMachine.stockCoins(CoinType.NICKEL,5);
+		
+		vendingMachine.stockItem(ItemType.SODA, 1);
+		
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		
+		vendingMachine.requestItem(ItemType.SODA);
+		
+		assertEquals("VendingMachine should display 'Price: 1.00'", "Price: 1.00",vendingMachine.getDisplayMessage());
+	}
+	
 }
