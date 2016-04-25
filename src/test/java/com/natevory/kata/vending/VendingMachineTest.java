@@ -129,4 +129,33 @@ public class VendingMachineTest {
 		assertEquals("VendingMachine should display 'Price: 1.00'", "Price: 1.00",vendingMachine.getDisplayMessage());
 	}
 	
+	@Test
+	public void theVendingMachineShouldReturnCoinsWhenRequested(){
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.DIME));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.DIME));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.NICKEL));
+		
+		vendingMachine.requestCoinReturn();
+		
+		Coin[] returnedCoins = vendingMachine.retrieveReturnedCoins();
+		
+		assertEquals("VendingMachine should return 6 coins",6,returnedCoins.length);
+		int quarterCount=0,dimeCount=0,nickelCount=0;
+		for(Coin c : returnedCoins){
+			CoinType ct = CoinType.getCoinType(c);
+			if(ct == CoinType.QUARTER)
+				quarterCount++;
+			if(ct == CoinType.DIME)
+				dimeCount++;
+			if(ct == CoinType.NICKEL)
+				nickelCount++;
+		}
+		assertEquals("VendingMachine should return 3 quarters",3,quarterCount);
+		assertEquals("VendingMachine should return 2 dimes",2,dimeCount);
+		assertEquals("VendingMachine should return 1 nickel",1,nickelCount);
+	}
+	
 }

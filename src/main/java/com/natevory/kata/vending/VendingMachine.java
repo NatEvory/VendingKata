@@ -45,6 +45,9 @@ public class VendingMachine {
 	public void stockCoins(CoinType coinType,int amount){
 		coinModule.stockCoins(coinType, amount);
 	}
+	public void requestCoinReturn(){
+		returnedCoins.addAll(coinModule.returnInsertedCoins());
+	}
 	
 	public Coin[] retrieveReturnedCoins(){
 		Coin[] coinReturn = returnedCoins.toArray(new Coin[0]);

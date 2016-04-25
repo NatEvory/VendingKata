@@ -27,6 +27,13 @@ public class CoinModule {
 		return true;
 	}
 	
+	public List<Coin> returnInsertedCoins(){
+		List<Coin> returnedCoins = new ArrayList<Coin>();
+		returnedCoins.addAll(insertedCoins);
+		insertedCoins.clear();
+		return returnedCoins;
+	}
+	
 	
 	public int getValueOfInsertedCoins(){
 		return insertedCoins.stream()

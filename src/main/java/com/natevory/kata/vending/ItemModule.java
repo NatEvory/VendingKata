@@ -39,6 +39,7 @@ public class ItemModule {
 			return 50;
 		if(itemType == ItemType.SODA)
 			return 100;
+		log.error("Cannot get price of unknown item type");
 		throw new IllegalArgumentException("Cannot get price of unkown item type");
 	}
 	
