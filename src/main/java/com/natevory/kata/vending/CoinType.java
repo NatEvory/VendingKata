@@ -6,21 +6,24 @@ import static com.natevory.kata.vending.CoinType.QUARTER;
 import static com.natevory.kata.vending.CoinType.UNKNOWN;
 
 public enum CoinType {
-	NICKEL(5.0,21.21),
-	DIME(2.27,17.9),
-	QUARTER(5.67,24.26),
-	UNKNOWN(-1,-1);
+	NICKEL(	5.0,	21.21,	5),
+	DIME(	2.27,	17.9,	10),
+	QUARTER(5.67,	24.26,	25),
+	UNKNOWN(-1,		-1,		0);
 	
 	private final double weight;
 	private final double size;
+	private final int valueInCents;
 	
-	CoinType(double weight, double size){
+	CoinType(double weight, double size, int valueInCents){
 		this.weight=weight;
 		this.size=size;
+		this.valueInCents = valueInCents;
 	}
 	
 	public double weight(){return weight;}
 	public double size(){return size;}
+	public int valueInCents(){return valueInCents;}
 	
 	public static Coin createCoin(CoinType type){
 		if(type == UNKNOWN)

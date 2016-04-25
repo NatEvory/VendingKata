@@ -42,10 +42,19 @@ public class VendingMachine {
 		if(messageQueue.size() > 0){
 			return messageQueue.poll();
 		} else if (coins.size()>0){
-			return "COINS";
+			float coinsValue = calculateValueOfInsertedCoins()/100f;
+			return String.format("%.2f",coinsValue);
 		} else {
 			return "INSERT COIN";
 		}
+	}
+	
+	private int calculateValueOfInsertedCoins(){
+		return coins.stream()
+				.map(c -> CoinType.getCoinType(c))
+				.filter(ct -> ct != CoinType.UNKNOWN)
+				.mapToInt(CoinType::valueInCents)
+				.sum();
 	}
 	
 	public int getCoinCount(){
