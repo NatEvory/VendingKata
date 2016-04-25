@@ -7,29 +7,27 @@ import javax.swing.event.EventListenerList;
 
 public class VendingMachine {
 	
-	private EventListenerList listenerList = new EventListenerList();
 	
-	
-	public void addCoinReturnListener(CoinReturnListener listener){
-		listenerList.add(CoinReturnListener.class, listener);	
-	}
-	
+	private CoinFilter coinFilter = new CoinFilter();
 	private List<Coin> coins = new ArrayList<Coin>();
+	private List<Coin> returnedCoins = new ArrayList<Coin>();
 	
 	public void insertCoin(Coin coin){
-		coins.add(coin);
+		CoinType type = coinFilter.getCoinType(coin);
+		if(type == CoinType.UNKNOWN)
+			rejectCoin(coin);
+		else
+			coins.add(coin);
+	}
+	
+	public Coin[] retrieveReturnedCoins(){
+		Coin[] coinReturn = returnedCoins.toArray(new Coin[0]);
+		returnedCoins.clear();
+		return coinReturn;
 	}
 	
 	private void rejectCoin(Coin coin){
-		fireCoinReturn(new Coin[]{coin});
-	}
-	
-	
-	private void fireCoinReturn(Coin[] coins){
-		CoinReturnListener[] listeners = listenerList.getListeners(CoinReturnListener.class);
-		for(CoinReturnListener l : listeners){
-			l.coinsReturned(coins);
-		}
+		returnedCoins.add(coin);
 	}
 	
 	public String getDisplayMessage(){

@@ -15,18 +15,20 @@ public class VendingMachineTest {
 	
 	@Test
 	public void theVendingMachineShouldAcceptCoins(){
-		vendingMachine.insertCoin(new Coin(1,1));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		assertEquals("There is 1 coin in the VendingMachine",1,vendingMachine.getCoinCount());
 	}
 	
 	@Test
 	public void theVendingMachineShouldOnlyAcceptNickelsDimesandQuarters(){
+		vendingMachine.insertCoin(new Coin(1,1));
+		assertEquals("A vending machine should reject invalid coins",1,vendingMachine.retrieveReturnedCoins().length);
 	}
 	
 	@Test
 	public void whenVendingMachineIsEmptyItShouldDisplayInsertCoins(){
 		assertEquals("An empty vending machine should display \"INSERT COIN\"","INSERT COIN",vendingMachine.getDisplayMessage());
-		vendingMachine.insertCoin(new Coin(1,1));
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
 		assertNotEquals("A vending machine with a coin in it should NOT display \"INSERT COIN\"","INSERT COIN", vendingMachine.getDisplayMessage());
 	}
 	

@@ -13,6 +13,6 @@ public class CoinFilter {
 		else if(coinSize==NICKEL.size() && coinWeight==NICKEL.weight())
 			return NICKEL;
 		else
-			return null;
+			return UNKNOWN;
 	}
 }
