@@ -64,5 +64,46 @@ public class CoinModule {
 			throw new IllegalArgumentException("CoinModule cannot stock unknown CoinType");
 		}
 	}
+
+
+	public Coin[] makeChange(int value) throws InsufficientFundsException, InsufficientChangeException{
+		int insertedCoinValue = getValueOfInsertedCoins();
+		int difference = insertedCoinValue - value;
+		if(difference < 0)
+			throw new InsufficientFundsException();
+		List<Coin> returnCoins = new ArrayList<Coin>();
+		Coin coin;
+		while(difference>=CoinType.QUARTER.valueInCents() && getStock(CoinType.QUARTER)>0){
+			coin = dispenseCoinFromStock(CoinType.QUARTER);
+			difference -=CoinType.QUARTER.valueInCents();
+			returnCoins.add(coin);
+		}
+		while(difference>=CoinType.DIME.valueInCents() && getStock(CoinType.DIME)>0){
+			coin = dispenseCoinFromStock(CoinType.DIME);
+			difference -=CoinType.DIME.valueInCents();
+			returnCoins.add(coin);
+		}
+		while(difference>=CoinType.NICKEL.valueInCents() && getStock(CoinType.NICKEL)>0){
+			coin = dispenseCoinFromStock(CoinType.NICKEL);
+			difference -=CoinType.NICKEL.valueInCents();
+			returnCoins.add(coin);
+		}
+		if(difference>0){
+			for(Coin c :returnCoins){
+				CoinType ct = CoinType.getCoinType(c);
+				stockCoins(ct, 1);
+			}
+			throw new InsufficientChangeException();
+		}
+		return returnCoins.toArray(new Coin[0]);
+	}
+	
+	private Coin dispenseCoinFromStock(CoinType coinType){
+		int currentStock = getStock(coinType);
+		if(currentStock <1)
+			return null;
+		coinStock.put(coinType,currentStock-1);
+		return CoinType.createCoin(coinType);
+	}
 	
 }

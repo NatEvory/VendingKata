@@ -59,4 +59,30 @@ public class CoinModuleTest {
 		coinModule.stockCoins(CoinType.DIME,1);
 		assertEquals("CoinModule should have 1 dime after socking 1",1,coinModule.getStock(CoinType.DIME));
 	}
+	
+	@Test
+	public void theCoinModuleShouldBeAbleToMakeChange(){
+		coinModule.stockCoins(CoinType.NICKEL, 2);
+		coinModule.stockCoins(CoinType.DIME, 2);
+		
+		coinModule.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		try{
+			Coin[] change = coinModule.makeChange(10);
+			int value = 0;
+			for(Coin c : change)
+				value += CoinType.getCoinType(c).valueInCents();
+			assertEquals("CoinModule should return 15 cents after making change for 10 on 25",15,value);
+		} catch(InsufficientFundsException ife){
+			fail("CoinModule reported insufficient funds");
+		} catch(InsufficientChangeException ice){
+			fail("CoinModule reproted insufficient change");
+		}
+		
+	}
+	
+	@Test(expected=InsufficientFundsException.class)
+	public void theCoinModuleShouldThrowInsufficientFundsException() throws InsufficientFundsException, InsufficientChangeException{
+		coinModule.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		coinModule.makeChange(30);
+	}
 }
