@@ -15,9 +15,17 @@ public class CoinModuleTest {
 	
 	@Test
 	public void theCoinModuleShouldAcceptCoins(){
-		Coin coin = CoinType.createCoin(CoinType.QUARTER);
-		assertTrue("CoinModule accepts quarters",coinModule.insertCoin(coin));
+		Coin quarter = CoinType.createCoin(CoinType.QUARTER);
+		assertTrue("CoinModule accepts quarters",coinModule.insertCoin(quarter));
 		assertEquals("CoinModule has 1 coin inserted after inserting a coin",1,coinModule.getInsertedCoinCount());
+
+		Coin dime = CoinType.createCoin(CoinType.DIME);
+		assertTrue("CoinModule accepts quarters",coinModule.insertCoin(dime));
+		assertEquals("CoinModule has 1 coin inserted after inserting 2 coins",2,coinModule.getInsertedCoinCount());
+
+		Coin nickel = CoinType.createCoin(CoinType.NICKEL);
+		assertTrue("CoinModule accepts quarters",coinModule.insertCoin(nickel));
+		assertEquals("CoinModule has 1 coin inserted after inserting 3 coins",3,coinModule.getInsertedCoinCount());
 	}
 	
 	@Test
