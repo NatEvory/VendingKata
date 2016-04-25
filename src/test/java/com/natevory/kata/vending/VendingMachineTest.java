@@ -23,6 +23,12 @@ public class VendingMachineTest {
 	public void theVendingMachineShouldOnlyAcceptNickelsDimesandQuarters(){
 		vendingMachine.insertCoin(new Coin(1,1));
 		assertEquals("A vending machine should reject invalid coins",1,vendingMachine.retrieveReturnedCoins().length);
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.QUARTER));
+		assertEquals("VendingMachine should accept quarters",1,vendingMachine.getCoinCount());
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.NICKEL));
+		assertEquals("VendingMachine should accept nickels",2,vendingMachine.getCoinCount());
+		vendingMachine.insertCoin(CoinType.createCoin(CoinType.DIME));
+		assertEquals("VendingMachine should accept quarters",3,vendingMachine.getCoinCount());
 	}
 	
 	@Test
